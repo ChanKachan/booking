@@ -6,11 +6,11 @@ type ErrorResponse struct {
 
 type ApiError struct {
 	Message string            `json:"message"`
-	Code    string            `json:"code"`
+	Code    int               `json:"code"`
 	Fields  map[string]string `json:"fields,omitempty"`
 }
 
 type Response struct {
-	Code string `json:"code"`
-	Data any    `json:"data"`
+	Code int `json:"code"`
+	Data any `json:"data"`
 }

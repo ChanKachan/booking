@@ -1,10 +1,10 @@
 package app
 
 import (
+	httpHandler "booking/internal/transport/http"
 	"context"
 	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"log/slog"
 	"net/http"
 	"os"
@@ -24,16 +24,19 @@ func NewApp() *App {
 		slog.NewJSONHandler(os.Stdout, nil),
 	)
 
-	router := gin.New()
-	router.Use(gin.Recovery())
+	//router := gin.New()
+	//router.Use(gin.Recovery())
+	//
+	//// Todo: Временно помести endpoint здесь, позже перенесем в handlers
+	//router.GET("/health", func(c *gin.Context) {
+	//	c.JSON(200, gin.H{
+	//		"status": "ok",
+	//	})
+	//	return
+	//})
 
-	// Todo: Временно помести endpoint здесь, позже перенесем в handlers
-	router.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"status": "ok",
-		})
-		return
-	})
+	handlers := httpHandler.NewHandlers()
+	router := handlers.InitRouter()
 
 	server := &http.Server{
 		Addr:              ":8080",
